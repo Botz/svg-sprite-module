@@ -1,9 +1,10 @@
 # SVG Sprite Module
 
+
 [![npm (scoped with tag)](https://img.shields.io/npm/v/@nuxtjs/svg-sprite/latest.svg?style=flat-square)](https://npmjs.com/package/@nuxtjs/svg-sprite)
 [![npm](https://img.shields.io/npm/dt/@nuxtjs/svg-sprite.svg?style=flat-square)](https://npmjs.com/package/@nuxtjs/svg-sprite)
 
-> Optimized and Easy way to use SVG files in Nuxt.js
+> Optimized and Easy way to use SVG files in Nuxt 3
 
 Sprites help increase speed, maintain a consistent development workflow, and make the creation of icons much faster. SVG sprites are typically created using icons of a similar shape or form whereas larger scale graphics are one-off applications.
 
@@ -27,7 +28,7 @@ Add `@nuxtjs/svg-sprite` to buildModules section of `nuxt.config.js`:
 
 ```js
 {
-  buildModules: [
+  modules: [
     '@nuxtjs/svg-sprite',
   ],
   svgSprite: {
