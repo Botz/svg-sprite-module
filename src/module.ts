@@ -9,6 +9,9 @@ import {
   useLogger,
   extendPages
 } from '@nuxt/kit'
+import {
+  WatchEvent
+} from 'unstorage'
 import type { OptimizeOptions } from 'svgo'
 import inlineDefs from './svgo-plugins/inlineDefs'
 import { iconsTemplate, spritesTemplate } from './template'
@@ -67,7 +70,7 @@ export default defineNuxtModule<ModuleOptions>({
   async setup (options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const resolveRuntimeModule = (path: string) => resolveModule(path, { paths: resolve('./runtime') })
-    const outDir = resolveAlias(options.output, nuxt.options.alias)
+    const outDir = resolveAlias(options.output as string, nuxt.options.alias)
 
     const logger = useLogger('svg-sprite')
 
@@ -107,8 +110,8 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     nuxt.hook('nitro:init', async (nitro) => {
-      const input = options.input.replace(/~|\.\//, 'root').replace(/\//g, ':')
-      const output = options.output.replace(/~|\.\//, 'root').replace(/\//g, ':')
+      const input = options?.input?.replace(/~|\.\//, 'root').replace(/\//g, ':') ?? ''
+      const output = options?.output?.replace(/~|\.\//, 'root').replace(/\//g, ':') ?? ''
 
       // Make sure output directory exists and contains .gitignore to ignore sprite files
       if (!await nitro.storage.hasItem(`${output}:.gitignore`)) {
@@ -122,7 +125,7 @@ export default defineNuxtModule<ModuleOptions>({
 
           return addSvg({
             name,
-            sprite: sprite || options.defaultSprite,
+            sprite: sprite || options.defaultSprite as string,
             content: await nitro.storage.getItem(`${input}:${file}`) as string
           })
         })
@@ -136,7 +139,7 @@ export default defineNuxtModule<ModuleOptions>({
         return
       }
 
-      const handleFileChange = async (event, file) => {
+      const handleFileChange = async (event: WatchEvent, file: string) => {
         if (!file.startsWith(input)) {
           return
         }
@@ -148,14 +151,14 @@ export default defineNuxtModule<ModuleOptions>({
           logger.log(`${file} changed`)
           await addSvg({
             name,
-            sprite: sprite || options.defaultSprite,
+            sprite: sprite || options.defaultSprite as string,
             content: await nitro.storage.getItem(`${input}:${file}`) as string
           })
         } else if (event === 'remove') {
           logger.log(`${file} removed`)
           removeSvg(sprite, name)
         }
-        await writeSprite(sprite || options.defaultSprite)
+        await writeSprite(sprite || options.defaultSprite as string)
       }
       nitro.storage.watch((event, file) => handleFileChange(event, file))
     })
