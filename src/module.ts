@@ -5,8 +5,9 @@ import {
   addTemplate,
   createResolver,
   addComponent,
-  addAutoImport,
-  useLogger
+  addImports,
+  useLogger,
+  extendPages
 } from '@nuxt/kit'
 import type { OptimizeOptions } from 'svgo'
 import inlineDefs from './svgo-plugins/inlineDefs'
@@ -71,7 +72,7 @@ export default defineNuxtModule<ModuleOptions>({
     const logger = useLogger('svg-sprite')
 
     await addComponent({ name: 'SvgIcon', filePath: resolve('./runtime/components/component.vue'), global: true })
-    await addAutoImport({ name: 'useSprite', as: 'useSprite', from: resolveRuntimeModule('./composables/useSprite') })
+    await addImports({ name: 'useSprite', as: 'useSprite', from: resolveRuntimeModule('./composables/useSprite') })
 
     const { sprites, addSvg, removeSvg, generateSprite } = createSpritesManager(options.optimizeOptions)
     nuxt.options.alias['#svg-sprite'] = addTemplate({
@@ -85,9 +86,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Register icons page
     if (options.iconsPath) {
-      // Add layout
-      nuxt.options.layouts['svg-sprite'] = resolve('runtime/components/layout.vue')
-
       // Add template
       nuxt.options.alias['#svg-sprite-icons'] = addTemplate({
         ...iconsTemplate,
@@ -99,11 +97,11 @@ export default defineNuxtModule<ModuleOptions>({
       }).dst
 
       // Register route
-      nuxt.hook('build:extendRoutes', (routes) => {
+      extendPages((routes) => {
         routes.unshift({
           name: 'icons-page',
           path: options.iconsPath,
-          component: resolve('runtime/components/icons-page.vue')
+          file: resolve('runtime/components/icons-page.vue')
         })
       })
     }

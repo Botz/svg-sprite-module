@@ -17,30 +17,31 @@
   ],
   "scripts": {
     "build": "nuxt-module-build",
-    "dev": "nuxi dev playground",
+    "dev": "nuxt dev playground",
     "dev:docs": "nuxi dev docs",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "lint": "eslint --ext .ts --ext .vue .",
-    "prepublishOnly": "yarn build",
-    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "prepare": "yarn dev:prepare",
+    "prepublishOnly": "npm run build",
+    "release": "npm test && standard-version && git push --follow-tags && npm publish",
+    "prepare": "npm run dev:prepare",
     "prepack": "nuxt-module-build",
     "test": "vitest"
   },
   "dependencies": {
-    "@nuxt/kit": "npm:@nuxt/kit-edge@latest",
+    "@nuxt/kit": "3.0.0",
     "svgo": "^2.8.0"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.1.7",
-    "@nuxt/test-utils": "npm:@nuxt/test-utils-edge@latest",
+    "@nuxt/test-utils": "3.0.0",
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/svgo": "^2.6.3",
     "eslint": "^8.19.0",
-    "nuxt": "npm:nuxt3@latest",
+    "nuxt": "3.0.0",
     "playwright": "^1.23.3",
     "standard-version": "latest",
-    "vitest": "^0.18.0"
+    "vitest": "^0.18.0",
+    "vue": "3.2.45"
   }
 }
