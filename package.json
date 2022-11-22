@@ -24,7 +24,6 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepublishOnly": "npm run build",
     "release": "npm test && standard-version && git push --follow-tags && npm publish",
-    "prepack": "nuxt-module-build",
     "test": "vitest"
   },
   "dependencies": {
