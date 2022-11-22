@@ -24,7 +24,6 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepublishOnly": "npm run build",
     "release": "npm test && standard-version && git push --follow-tags && npm publish",
-    "prepare": "npm run dev:prepare",
     "prepack": "nuxt-module-build",
     "test": "vitest"
   },
@@ -33,7 +32,7 @@
     "svgo": "^2.8.0"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "^0.1.7",
+    "@nuxt/module-builder": "^0.2.1",
     "@nuxt/test-utils": "3.0.0",
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/svgo": "^2.6.3",
