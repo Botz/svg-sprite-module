@@ -7,6 +7,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useSprite } from '../composables/useSprite'
+
 const props = defineProps({
   name: {
     type: String,
