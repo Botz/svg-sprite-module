@@ -26,7 +26,7 @@ const props = defineProps({
   viewBox: {
     type: String,
     default: null,
-    validator (value) {
+    validator (value: string) {
       return value.split(' ').every((v) => {
         return !isNaN(parseInt(v))
       })
