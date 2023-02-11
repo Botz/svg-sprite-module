@@ -320,9 +320,20 @@ const module = defineNuxtModule({
         });
       });
     }
+    nuxt.hook("nitro:config", (nitro) => {
+      const assetsFS = {
+        driver: "fs",
+        path: "test",
+        base: outDir
+      };
+      if (!nitro.storage) {
+        nitro.storage = {};
+      }
+      nitro.storage.svgs = assetsFS;
+    });
     nuxt.hook("nitro:init", async (nitro) => {
       const input = options?.input?.replace(/~|\.\//, "root").replace(/\//g, ":") ?? "";
-      const output = options?.output?.replace(/~|\.\//, "root").replace(/\//g, ":") ?? "";
+      const output = "svgs";
       if (!await nitro.storage.hasItem(`${output}:.gitignore`)) {
         await nitro.storage.setItem(`${output}:.gitignore`, "*");
       }
