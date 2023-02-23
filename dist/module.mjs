@@ -323,7 +323,7 @@ const module = defineNuxtModule({
     nuxt.hook("nitro:config", (nitro) => {
       const assetsFS = {
         driver: "fs",
-        path: "test",
+        path: "svgGen",
         base: outDir
       };
       if (!nitro.storage) {

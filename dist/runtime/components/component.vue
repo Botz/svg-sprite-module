@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useSprite } from '../composables/useSprite'
 
 const props = defineProps({
@@ -39,5 +39,8 @@ const icon = ref({
   class: ''
 })
 
-icon.value = await useSprite(props.name)
+watch(
+  () => props.name,
+  async (newValue) => { icon.value = await useSprite(newValue) },
+  { immediate: true })
 </script>
